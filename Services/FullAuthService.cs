@@ -11,8 +11,24 @@ namespace ISRORBilling.Services;
 public class FullAuthService : IAuthService
 {
 	private readonly JoymaxPortalContext _joymaxPortalContext;
+	private readonly ILogger<FullAuthService> _logger;
 
-	public FullAuthService(JoymaxPortalContext joymaxPortalContext) => _joymaxPortalContext = joymaxPortalContext;
+	public FullAuthService(JoymaxPortalContext joymaxPortalContext, ILogger<FullAuthService> logger)
+	{
+		_joymaxPortalContext = joymaxPortalContext;
+		_logger = logger;
+	}
+
+	public AUserLoginResponse Login(CheckUserRequest request)
+	{
+		if (!request.Validate())
+		{
+			_logger.LogCritical("Couldn't validate if request was legitimate. Ensure the SaltKey matches the one in GatewayServer. [Error Code: {ErrorCode}]\nDetails:{Request}", (int)LoginResponseCodeEnum.Emergency, request);
+			return new AUserLoginResponse { ReturnValue = LoginResponseCodeEnum.Emergency };
+		}
+
+		return Login(request.UserId, request.HashedUserPassword, request.ChannelId.ToString());
+	}
 
 	public AUserLoginResponse Login(string userId, string userPw, string channel)
        {

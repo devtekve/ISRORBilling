@@ -7,13 +7,29 @@ namespace ISRORBilling.Services;
 public class SimpleAuthService : IAuthService
 {
     private readonly AccountContext _accountContext;
+    private readonly ILogger<SimpleAuthService> _logger;
 
-    public SimpleAuthService(AccountContext accountContext) => _accountContext = accountContext;
+    public SimpleAuthService(AccountContext accountContext, ILogger<SimpleAuthService> logger)
+    {
+        _accountContext = accountContext;
+        _logger = logger;
+    }
 
+    public AUserLoginResponse Login(CheckUserRequest request)
+    {
+        if (!request.Validate())
+        {
+            _logger.LogCritical("Couldn't validate if request was legitimate. Ensure the SaltKey matches the one in GatewayServer. [Error Code: {ErrorCode}]\nDetails:{Request}", (int)LoginResponseCodeEnum.Emergency, request);
+            return new AUserLoginResponse { ReturnValue = LoginResponseCodeEnum.Emergency };
+        }
 
+        return Login(request.UserId, request.HashedUserPassword, request.ChannelId.ToString());
+    }
     public AUserLoginResponse Login(string userId, string userPw, string channel)
     {
-        if (userId.IsNullOrEmpty()) return new AUserLoginResponse() {ReturnValue = LoginResponseCodeEnum.Error};
+        if (userId.IsNullOrEmpty()) 
+            return new AUserLoginResponse() {ReturnValue = LoginResponseCodeEnum.Error};
+        
         var user = channel switch
         {
             "1" => _accountContext.Users.FirstOrDefault(user => user.StrUserID == userId && user.password == userPw),
