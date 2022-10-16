@@ -31,7 +31,6 @@ public class BypassAuthService : IAuthService
             JID = user.PortalJID,
             // CurrentDate = null,
             ARCode = null,
-            EmailAddr = user.StrEmail,
             EmailCertificationStatus = null,
             EmailUniqueStatus = null,
             NickName = null,

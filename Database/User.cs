@@ -10,8 +10,6 @@ public class User
     public int JID {get; set;}
     public int PortalJID {get; set;}
     public string StrUserID {get; set;}
-    public string? StrEmail { get; set; }
-    // public string? passwordSha256 { get; set; }
     public int ServiceCompany {get; set;}
     public string password {get; set;}
     public int Active {get; set;}
