@@ -3,6 +3,10 @@ namespace ISRORBilling.Models;
 public enum LoginResponseCodeEnum : int
 {
     Success = 0,
+    WrongPassword = 1,
+    ServerMaintenance = 2,
+    C7 = 3,
+    NeedVerification = 4,
     Error = -65543,
     NoRowsAffectedMaybe = -65544,
     Emergency = -65553,
