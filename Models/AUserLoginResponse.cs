@@ -15,11 +15,21 @@ public class AUserLoginResponse
     public string? EmailUniqueStatus { get; set; }
     public string? NickName { get; set; }
     public string? VipLevel { get; set; }
-    public string? VipExpireTime { get; set; }
-    public string? VipUserType { get; set; }
+    public DateTime? VipExpireTime { get; set; }
+    public VipUserType? VipUserType { get; set; }
 
     public override string ToString()
     {
-        return $"{(int)ReturnValue}|{JID}|unknown20byte|unknown2|{EmailUniqueStatus ?? "NULL"}|{EmailAddr ?? "NULL"}|unknown3|{(CurrentDate ?? DateTime.Now).ToString("yyyy-MM-dd hh:mm:ss", CultureInfo.InvariantCulture)}|{NickName ?? "NULL"}";
+        return $"{(int)ReturnValue}|" + 
+               $"{JID}|" +
+               $"{(CurrentDate ?? DateTime.Now).ToString("yyyy-MM-dd hh:mm:ss", CultureInfo.InvariantCulture)}|" +
+               $"{EmailCertificationStatus}|" + // Not confirmed
+               $"{EmailUniqueStatus}|" + // Not 100% confirmed, it could be either EmailUniqueStatus or EmailCertificationStatus, but's one of those.
+               $"{EmailAddr ?? "NULL"}|" +
+               $"{VipLevel}|" +
+               $"{(VipExpireTime ?? DateTime.Now).ToString("yyyy-MM-dd hh:mm:ss", CultureInfo.InvariantCulture)}|" +  
+               $"{VipUserType}|" + 
+               $"AFAILUREDESCRIPTION?|" + //This is named "desc" on the error message on the gateway when there's a failure during login.
+               $"URL-RELATED?|" ; //This is named "url" on the error message on the gateway when there's a failure during login.
     }
 }
