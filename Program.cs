@@ -26,12 +26,12 @@ Enum.TryParse(builder.Configuration.GetSection("AuthService")?.Value, true, out 
 switch (loginService)
 {
     case SupportedLoginServicesEnum.Full:
-        builder.Services.AddScoped<IAuthService, SimpleAuthService>();
+        builder.Services.AddScoped<IAuthService, FullAuthService>();
         break;
     case SupportedLoginServicesEnum.Bypass:
         builder.Services.AddScoped<IAuthService, BypassAuthService>();
         break;
-    
+
     case SupportedLoginServicesEnum.Simple:
     default:
         builder.Services.AddScoped<IAuthService, SimpleAuthService>();
