@@ -48,7 +48,7 @@ public class FullAuthService : IAuthService
             , @EmailUniqueStatus char(1)
             , @NickName varchar(30)
             , @VipLevel int
-            , @VipExpireTime varchar(20)
+            , @VipExpireTime datetime
             , @VipUserType int;
 
             EXEC @return_value = [dbo].[A_UserLogin] @UserID = {userId},

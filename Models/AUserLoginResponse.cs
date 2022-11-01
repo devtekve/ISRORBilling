@@ -14,7 +14,7 @@ public class AUserLoginResponse
     public string? EmailCertificationStatus { get; set; }
     public string? EmailUniqueStatus { get; set; }
     public string? NickName { get; set; }
-    public string? VipLevel { get; set; }
+    public int? VipLevel { get; set; }
     public DateTime? VipExpireTime { get; set; }
     public VipUserType? VipUserType { get; set; }
 
@@ -26,9 +26,9 @@ public class AUserLoginResponse
                $"{EmailCertificationStatus}|" + // Not confirmed
                $"{EmailUniqueStatus}|" + // Not 100% confirmed, it could be either EmailUniqueStatus or EmailCertificationStatus, but's one of those.
                $"{EmailAddr ?? "NULL"}|" +
-               $"{VipLevel}|" +
-               $"{(VipExpireTime ?? DateTime.Now).ToString("yyyy-MM-dd hh:mm:ss", CultureInfo.InvariantCulture)}|" +  
-               $"{VipUserType}|" + 
+               $"{VipLevel ?? 0}|" +
+               $"{(VipExpireTime ?? DateTime.Now).ToString("yyyy-MM-dd hh:mm:ss", CultureInfo.InvariantCulture)}|" +
+               $"{(int)(VipUserType ?? Models.VipUserType.free)}|" + 
                $"AFAILUREDESCRIPTION?|" + //This is named "desc" on the error message on the gateway when there's a failure during login.
                $"URL-RELATED?|" ; //This is named "url" on the error message on the gateway when there's a failure during login.
     }
