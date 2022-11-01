@@ -31,7 +31,7 @@ switch (loginService)
     case SupportedLoginServicesEnum.Bypass:
         builder.Services.AddScoped<IAuthService, BypassAuthService>();
         break;
-    
+
     case SupportedLoginServicesEnum.Simple:
     default:
         builder.Services.AddScoped<IAuthService, SimpleAuthService>();
