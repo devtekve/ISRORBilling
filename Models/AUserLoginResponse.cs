@@ -28,7 +28,7 @@ public class AUserLoginResponse
                $"{EmailAddr ?? "NULL"}|" +
                $"{VipLevel ?? 0}|" +
                $"{(VipExpireTime ?? DateTime.Now).ToString("yyyy-MM-dd hh:mm:ss", CultureInfo.InvariantCulture)}|" +
-               $"{(int)(VipUserType ?? Models.VipUserType.free)}|" + 
+               $"{(int)(VipUserType ?? Models.VipUserType.Free)}|" + 
                $"AFAILUREDESCRIPTION?|" + //This is named "desc" on the error message on the gateway when there's a failure during login.
                $"URL-RELATED?|" ; //This is named "url" on the error message on the gateway when there's a failure during login.
     }

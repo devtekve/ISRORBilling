@@ -1,6 +1,7 @@
 using ISRORBilling.Database;
 using ISRORBilling.Models;
 using ISRORBilling.Services;
+using ISRORBilling.Services.CommunityProvided.Nemo07;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -30,6 +31,14 @@ switch (loginService)
         break;
     case SupportedLoginServicesEnum.Bypass:
         builder.Services.AddScoped<IAuthService, BypassAuthService>();
+        break;
+    case SupportedLoginServicesEnum.Nemo:
+        builder.Services.AddDbContext<NemoAccountContext>(options =>
+        {
+            options.UseSqlServer(builder.Configuration.GetSection("DbConfig")["AccountDB"]);
+            options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+        });
+        builder.Services.AddScoped<IAuthService, NemoAuthService>();
         break;
 
     case SupportedLoginServicesEnum.Simple:

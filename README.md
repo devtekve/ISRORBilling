@@ -12,7 +12,8 @@ Appsettings is where you can configure the tool's behavior.
   "Logging": {
     "LogLevel": {
       "Default": "Information",
-      "Microsoft.AspNetCore": "Information"
+      "Microsoft.AspNetCore": "Warning",
+      "Microsoft.EntityFrameworkCore": "Warning"
     }
   },
   "Kestrel": {
@@ -22,11 +23,12 @@ Appsettings is where you can configure the tool's behavior.
       }
     }
   },
-  "AuthService": "Simple", // 👈 Supported types: Simple, Full, Bypass.
+  "AuthService": "Simple", // 👈 Supported types: Simple, Full, Bypass, Nemo.
   "DbConfig": {
     "AccountDB": "Data Source=.\\;TrustServerCertificate=True;Initial Catalog=SILKROAD_R_ACCOUNT;User ID=sa;Password=1;",
     "JoymaxPortalDB": "Data Source=.\\;TrustServerCertificate=True;Initial Catalog=GB_JoymaxPortal;User ID=sa;Password=1;"
   },
+  "SaltKey": "eset5ag.nsy-g6ky5.mp",  // 👈 Used to validate payloads in some of the auth services. it must match the GatewayServer hardcoded value!
   "AllowedHosts": "*" // 👈 learn more: https://learn.microsoft.com/en-us/aspnet/core/fundamentals/servers/kestrel/host-filtering?view=aspnetcore-6.0
 }
 ```

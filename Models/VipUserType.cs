@@ -2,8 +2,11 @@ namespace ISRORBilling.Models
 {
     public enum VipUserType : int
     {
-        vip = 1,
-        free = 2,
-        returning = 3
+        Unknown = 0,
+        Vip = 1,
+        New = 2,
+        Returning = 3,
+        Free = 4
+
     }
 }

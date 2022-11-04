@@ -4,5 +4,6 @@ public enum SupportedLoginServicesEnum: byte
 {
     Simple,
     Full,
-    Bypass
+    Bypass,
+    Nemo
 }
