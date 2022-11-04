@@ -74,6 +74,23 @@ It completely **bypasses the password**
 }
 ```
 
+### Nemo
+
+It's a feature that make you use **VIP system** with simple authorizer for people who can't deal with tables in **GB_JoymaxPortal** , you will only use the **[TB_User]** table in **Silkroad_R_Account** Database.
+
+`appsettings.json`
+```json
+{
+  ...
+  "AuthService": "Nemo", // 👈 Changed here to Nemo
+  "DbConfig": {...},
+  ...
+}
+```
+
+You can see [more details here](/Services/CommunityProvided/Nemo07#made-by-nemo07)
+
+
 ## Make your own login flow
 Thanks to dependency injection, **you don't need to modify the endpoints themselves**. If you have a newer / better / funnier / cooler authentication flow, you can create it and have minimal changes on the app itself. You just need to make sure you implement the interface `IAuthService`.
 ### Example of very simple auth service that doesn't do DB
