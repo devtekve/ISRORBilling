@@ -80,4 +80,21 @@ app.MapGet("/cgi/EmailPassword.asp",
 
         return -1;
     });
+
+app.MapGet("/cgi/Email_Certification.asp",
+    async ([FromQuery] string values, [FromServices] ILogger<Program> logger, [FromServices] AccountContext accountContext,
+        [FromServices] IEmailService emailService) =>
+    {
+        if (saltKey.IsNullOrEmpty())
+            logger.LogWarning("THERE'S NO SALT KEY CONFIGURED IN APPSETTINGS; WE CAN'T VALIDATE IF REQUEST WAS TAMPERED!");
+
+        logger.LogDebug("Received in params: {Values}", values);
+
+        var request = new SendItemLockByEmailRequest(values, saltKey);
+
+        if (await emailService.SendItemCodeByEmail(request))
+            return 0;
+
+        return -1;
+    });
 app.Run();
