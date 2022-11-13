@@ -26,6 +26,12 @@ Editing SQL Table and procedure
 
 * Editing the Rigid Register Procedure **_Rigid_Register_User**  in [ SILKROAD_R_ACCOUNT ] Database  by using [UpdateRigidRegisterUserSproc.sql](/Database/CommunityProvided/Nemo07/Scripts/UpdateRigidRegisterUserSproc.sql) in `/Database/CommunityProvided/Nemo07/Scripts` of this repo
 
+## Registering a new user
+You can use the following example to register a new user using this Auhtorizer method.
+```sql
+exec _Rigid_Register_User 'YOURusername','YOURpassword(md5)','YOURemail@gmail.com','Y','Y','EU','127.0.0.1', VipExpireTime
+```
+
 
 # If you need to Switch to another Authority :
 ![enter image description here](https://i.imgur.com/hguwJlt.png)
