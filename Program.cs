@@ -1,7 +1,6 @@
 using ISRORBilling.Database;
 using ISRORBilling.Models;
 using ISRORBilling.Services;
-using ISRORBilling.Services.CommunityProvided.Nemo07;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -27,20 +26,12 @@ Enum.TryParse(builder.Configuration.GetSection("AuthService")?.Value, true, out 
 switch (loginService)
 {
     case SupportedLoginServicesEnum.Full:
-        builder.Services.AddScoped<IAuthService, FullAuthService>();
+        builder.Services.AddScoped<IAuthService, SimpleAuthService>();
         break;
     case SupportedLoginServicesEnum.Bypass:
         builder.Services.AddScoped<IAuthService, BypassAuthService>();
         break;
-    case SupportedLoginServicesEnum.Nemo:
-        builder.Services.AddDbContext<NemoAccountContext>(options =>
-        {
-            options.UseSqlServer(builder.Configuration.GetSection("DbConfig")["AccountDB"]);
-            options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
-        });
-        builder.Services.AddScoped<IAuthService, NemoAuthService>();
-        break;
-
+    
     case SupportedLoginServicesEnum.Simple:
     default:
         builder.Services.AddScoped<IAuthService, SimpleAuthService>();
@@ -80,4 +71,22 @@ app.MapGet("/cgi/EmailPassword.asp",
 
         return -1;
     });
+
+app.MapGet("/cgi/Email_Certification.asp",
+    async ([FromQuery] string values, [FromServices] ILogger<Program> logger, [FromServices] AccountContext accountContext,
+        [FromServices] IEmailService emailService) =>
+    {
+        if (saltKey.IsNullOrEmpty())
+            logger.LogWarning("THERE'S NO SALT KEY CONFIGURED IN APPSETTINGS; WE CAN'T VALIDATE IF REQUEST WAS TAMPERED!");
+
+        logger.LogDebug("Received in params: {Values}", values);
+
+        var request = new SendItemLockByEmailRequest(values, saltKey);
+
+        if (await emailService.SendLockItemKeyByEmail(request))
+            return 0;
+
+        return -1;
+    });
+
 app.Run();

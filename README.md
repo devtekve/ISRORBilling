@@ -12,8 +12,7 @@ Appsettings is where you can configure the tool's behavior.
   "Logging": {
     "LogLevel": {
       "Default": "Information",
-      "Microsoft.AspNetCore": "Warning",
-      "Microsoft.EntityFrameworkCore": "Warning"
+      "Microsoft.AspNetCore": "Information"
     }
   },
   "Kestrel": {
@@ -23,12 +22,11 @@ Appsettings is where you can configure the tool's behavior.
       }
     }
   },
-  "AuthService": "Simple", // 👈 Supported types: Simple, Full, Bypass, Nemo.
+  "AuthService": "Simple", // 👈 Supported types: Simple, Full, Bypass.
   "DbConfig": {
     "AccountDB": "Data Source=.\\;TrustServerCertificate=True;Initial Catalog=SILKROAD_R_ACCOUNT;User ID=sa;Password=1;",
     "JoymaxPortalDB": "Data Source=.\\;TrustServerCertificate=True;Initial Catalog=GB_JoymaxPortal;User ID=sa;Password=1;"
   },
-  "SaltKey": "eset5ag.nsy-g6ky5.mp",  // 👈 Used to validate payloads in some of the auth services. it must match the GatewayServer hardcoded value!
   "AllowedHosts": "*" // 👈 learn more: https://learn.microsoft.com/en-us/aspnet/core/fundamentals/servers/kestrel/host-filtering?view=aspnetcore-6.0
 }
 ```
@@ -73,23 +71,6 @@ It completely **bypasses the password**
   "AuthService": "Bypass", // 👈👀
 }
 ```
-
-### Nemo
-
-It's a feature that make you use **VIP system** with simple authorizer for people who can't deal with tables in **GB_JoymaxPortal** , you will only use the **[TB_User]** table in **Silkroad_R_Account** Database.
-
-`appsettings.json`
-```json
-{
-  ...
-  "AuthService": "Nemo", // 👈 Changed here to Nemo
-  "DbConfig": {...},
-  ...
-}
-```
-
-You can see [more details here](/Services/CommunityProvided/Nemo07#made-by-nemo07)
-
 
 ## Make your own login flow
 Thanks to dependency injection, **you don't need to modify the endpoints themselves**. If you have a newer / better / funnier / cooler authentication flow, you can create it and have minimal changes on the app itself. You just need to make sure you implement the interface `IAuthService`.

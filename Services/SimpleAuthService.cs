@@ -54,3 +54,18 @@ public class SimpleAuthService : IAuthService
         };
     }
 }
+            //, @UserID varchar(30)
+            //, @UserPwd char (32)
+            //, @ServiceCode smallint
+            //, @UserIP binary(4)
+            //, @Channel char (1)
+            //, @JID int
+            //, @CurrentDate datetime
+            //, @ARCode smallint
+            //, @EmailAddr varchar(128)
+            //, @EmailCertificationStatus char (1)
+            //, @EmailUniqueStatus char (1)
+            //, @NickName varchar(30)
+            //, @VipLevel int
+            //, @VipExpireTime varchar(20)
+            //, @VipUserType int;
