@@ -15,7 +15,7 @@ ALTER procedure [dbo].[_Rigid_Register_User]
 	@szRegistrantIP varchar(15),
 	--@szVIPUserType int,
 	--@szVIPLv int,
-	@szVipExpireTime varchar(20)
+	@szVipExpireTime datetime
 AS
 
 SET NOCOUNT ON
