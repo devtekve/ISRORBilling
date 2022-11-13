@@ -45,21 +45,3 @@ jobs:
           tag: ${{ steps.create_tag.outputs.new_tag }}
         env:
           GITHUB_TOKEN: ${{ github.token }}
-      - name: upload linux artifact
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./ISRORBilling_win-x64.tar.gz
-          asset_name: ISRORBilling_win-x64.tar.gz
-          asset_content_type: application/gzip
-      - name: upload windows artifact
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./ISRORBillingr_linux-x64.tar.gz
-          asset_name: ISRORBillingr_linux-x64.tar.gz
-          asset_content_type: application/gzip
