@@ -1,3 +1,6 @@
+using Azure.Core;
+using ISRORBilling.Models;
+
 namespace ISRORBilling.Services;
 
 public class EmailService : IEmailService
@@ -12,9 +15,15 @@ public class EmailService : IEmailService
         return Task.FromResult(false);
     }
 
-    public Task<bool> SendItemCodeByEmail(string lockCode, string strEmail)
+    public Task<bool> SendItemCodeByEmail(SendItemLockByEmailRequest request)
     {
-        _logger.LogError($"Sending Code by email is not implemented! Failed for [{strEmail}]; provided lock code was [{lockCode}]");
+        if (!request.Validate())
+        {
+            _logger.LogCritical("Couldn't validate if request was legitimate. Ensure the SaltKey matches the one in GatewayServer. [Error Code: {ErrorCode}]\nDetails:{Request}", (int)LoginResponseCodeEnum.Emergency, request);
+            return Task.FromResult(false);
+        }
+
+        _logger.LogError($"Sending Item Lock Key by email is not implemented! Failed for [{request.email}]");
         return Task.FromResult(false);
     }
 }
