@@ -33,9 +33,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           WITH_V: true
       - name: publish_win_x64
-        run: dotnet publish -r win-x64 -c Release --self-contained true &&  tar -czvf ISRORBilling_win-x64.tar.gz -C ./bin/Release/net7.0/win-x64/publish .
+        run: dotnet publish -r win-x64 -c Release --self-contained true &&  tar -czvf ISRORBilling_win-x64.tar.gz -C ./bin/Release/net7.0/win-x64/publish ./
       - name: publish_linux_x64
-        run: dotnet publish -r linux-x64 -c Release --self-contained true && tar -czvf ISRORBilling_linux-x64.tar.gz -C ./bin/Release/net7.0/linux-x64/publish .
+        run: dotnet publish -r linux-x64 -c Release --self-contained true && tar -czvf ISRORBilling_linux-x64.tar.gz -C ./bin/Release/net7.0/linux-x64/publish ./
 
       - name: Create Release
         uses: ncipollo/release-action@v1
