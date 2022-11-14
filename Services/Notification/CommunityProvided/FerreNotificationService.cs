@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 namespace ISRORBilling.Services.Notification.CommunityProvided;
 
 /// <summary>
-/// a stored procedure located here https://discord.com/channels/1025380221941207151/1025380222683582518/1041717353253187585 is required
+/// You need to create the stored procedure Update_ItemLock, which can be found under Database->CommunityProvided->F3rreNotificationService
 /// </summary>
 public class FerreNotificationService : INotificationService
 {
