@@ -21,8 +21,8 @@ public class FerreNotificationService : INotificationService
     
     private int UpdateLockPw(string JID, string Email,string LockPW) =>
         _accountContext.Database
-            .SqlQuery<int?>($"EXEC Update_ItemLock @jid = {JID}, @mail = {Email}, @pw = {LockPW}")
-            .FirstOrDefault() ?? -1;
+            .SqlQuery<int?>($"EXEC Update_ItemLock @jid = {JID}, @email = {Email}, @lockPw = {LockPW}")
+            .AsEnumerable().FirstOrDefault() ?? -1;
 
     public Task<bool> SendSecondPassword(SendCodeRequest request)
     {

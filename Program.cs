@@ -69,7 +69,6 @@ switch (loginService)
         break;
 }
 
-builder.Services.AddSingleton<INotificationService, EmailNotificationService>();
 var saltKey = builder.Configuration.GetSection("SaltKey").Value ?? string.Empty;
 var app = builder.Build();
 
