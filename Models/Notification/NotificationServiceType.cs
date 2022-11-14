@@ -4,4 +4,5 @@ public enum NotificationServiceType
 {
     None,
     Email,
+    Ferre
 }

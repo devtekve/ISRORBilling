@@ -6,6 +6,7 @@ using ISRORBilling.Models.Options;
 using ISRORBilling.Services.Authentication;
 using ISRORBilling.Services.Authentication.CommunityProvided.Nemo07;
 using ISRORBilling.Services.Notification;
+using ISRORBilling.Services.Notification.CommunityProvided;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -32,6 +33,10 @@ switch (notificationServiceType)
     case NotificationServiceType.Email:
         builder.Services.Configure<EmailOptions>(builder.Configuration.GetSection("EmailService"));
         builder.Services.AddSingleton<INotificationService, EmailNotificationService>();
+        break;
+    
+    case NotificationServiceType.Ferre:
+        builder.Services.AddSingleton<INotificationService, FerreNotificationService>();
         break;
     
     case NotificationServiceType.None:
@@ -64,7 +69,6 @@ switch (loginService)
         break;
 }
 
-builder.Services.AddSingleton<INotificationService, EmailNotificationService>();
 var saltKey = builder.Configuration.GetSection("SaltKey").Value ?? string.Empty;
 var app = builder.Build();
 
