@@ -1,21 +1,16 @@
 using System.Security.Cryptography;
 using System.Text;
-using System.Text.Json;
-using Microsoft.IdentityModel.Tokens;
 
-namespace ISRORBilling.Models;
+namespace ISRORBilling.Models.Authentication;
 
-public class CheckUserRequest
+public class CheckUserRequest : GatewayRequest
 {
-    public readonly string? SaltKey;
     public short ChannelId { get; }
     public string UserId { get; }
     public string HashedUserPassword { get; }
     public string UserIp { get; }
     public int UnixTimeStamp { get; }
-    public string? UserProvidedValidationToken { get; }
-
-    public string CalculatedToken
+    protected override string CalculatedToken
     {
         get
         {
@@ -36,16 +31,4 @@ public class CheckUserRequest
         UnixTimeStamp = int.Parse(allValues.ElementAtOrDefault(4) ?? "0");
         UserProvidedValidationToken = allValues.ElementAtOrDefault(5);
     }
-
-    /// <summary>
-    /// Compares the provided ValidationToken on the request with our own generated token. If no saltKey was provided, defaults to false.
-    /// </summary>
-    /// <returns></returns>
-    public bool Validate()
-    {
-        return !UserProvidedValidationToken.IsNullOrEmpty() && !SaltKey.IsNullOrEmpty() &&
-                     UserProvidedValidationToken == CalculatedToken;
-    }
-
-    public override string ToString() => JsonSerializer.Serialize(this);
 }

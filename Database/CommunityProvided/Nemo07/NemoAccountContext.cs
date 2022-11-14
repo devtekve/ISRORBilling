@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace ISRORBilling.Database;
+namespace ISRORBilling.Database.CommunityProvided.Nemo07;
 
 public class NemoAccountContext : DbContext
 {

@@ -1,7 +1,8 @@
 using System.Globalization;
+using ISRORBilling.Models.Enums;
 using Microsoft.EntityFrameworkCore;
 
-namespace ISRORBilling.Models;
+namespace ISRORBilling.Models.Authentication;
 
 [Keyless]
 public class AUserLoginResponse
@@ -28,7 +29,7 @@ public class AUserLoginResponse
                $"{EmailAddr ?? "NULL"}|" +
                $"{VipLevel ?? 0}|" +
                $"{(VipExpireTime ?? DateTime.Now).ToString("yyyy-MM-dd hh:mm:ss", CultureInfo.InvariantCulture)}|" +
-               $"{(int)(VipUserType ?? Models.VipUserType.Free)}|" + 
+               $"{(int)(VipUserType ?? Enums.VipUserType.Free)}|" + 
                $"AFAILUREDESCRIPTION?|" + //This is named "desc" on the error message on the gateway when there's a failure during login.
                $"URL-RELATED?|" ; //This is named "url" on the error message on the gateway when there's a failure during login.
     }

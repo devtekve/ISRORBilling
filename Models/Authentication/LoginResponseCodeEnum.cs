@@ -1,4 +1,4 @@
-namespace ISRORBilling.Models;
+namespace ISRORBilling.Models.Authentication;
 
 public enum LoginResponseCodeEnum : int
 {
