@@ -28,6 +28,18 @@ Appsettings is where you can configure the tool's behavior.
     "AccountDB": "Data Source=.\\;TrustServerCertificate=True;Initial Catalog=SILKROAD_R_ACCOUNT;User ID=sa;Password=1;",
     "JoymaxPortalDB": "Data Source=.\\;TrustServerCertificate=True;Initial Catalog=GB_JoymaxPortal;User ID=sa;Password=1;"
   },
+  "NotificationService": {
+    "Type": "Email" // 👈 Only supported email for now. In the future others can add more types, same as auth type.
+  },
+  "EmailService": {
+    "From": "yourEmail",
+    "FromFriendlyName": "YourServerName??",
+    "SmtpServer": "smtp.gmail.com",
+    "Port": 465,
+    "Username": "FOLLOW https://code-maze.com/aspnetcore-send-email/",
+    "Password": "FOLLOW https://code-maze.com/aspnetcore-send-email/",
+    "SkipTokenValidation": false
+  },
   "SaltKey": "eset5ag.nsy-g6ky5.mp",  // 👈 Used to validate payloads in some of the auth services. it must match the GatewayServer hardcoded value!
   "AllowedHosts": "*" // 👈 learn more: https://learn.microsoft.com/en-us/aspnet/core/fundamentals/servers/kestrel/host-filtering?view=aspnetcore-6.0
 }

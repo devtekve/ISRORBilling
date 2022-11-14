@@ -1,7 +1,4 @@
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace ISRORBilling.Database;
+namespace ISRORBilling.Database.CommunityProvided.Nemo07;
 
 /// <summary>
 /// In order to use this, you must modify your existing TB_User table and add the fields below, more info on the readme!.

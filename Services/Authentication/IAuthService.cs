@@ -1,6 +1,6 @@
-using ISRORBilling.Models;
+using ISRORBilling.Models.Authentication;
 
-namespace ISRORBilling.Services;
+namespace ISRORBilling.Services.Authentication;
 
 public interface IAuthService
 {

@@ -1,8 +1,9 @@
-using ISRORBilling.Database;
-using ISRORBilling.Models;
+using ISRORBilling.Database.CommunityProvided.Nemo07;
+using ISRORBilling.Models.Authentication;
+using ISRORBilling.Models.Enums;
 using Microsoft.IdentityModel.Tokens;
 
-namespace ISRORBilling.Services.CommunityProvided.Nemo07;
+namespace ISRORBilling.Services.Authentication.CommunityProvided.Nemo07;
 
 /// <summary>
 /// This should ONLY be used when developing, as it will not really check for the PW

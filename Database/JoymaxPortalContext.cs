@@ -1,4 +1,4 @@
-using ISRORBilling.Models;
+using ISRORBilling.Models.Authentication;
 using Microsoft.EntityFrameworkCore;
 
 namespace ISRORBilling.Database;
