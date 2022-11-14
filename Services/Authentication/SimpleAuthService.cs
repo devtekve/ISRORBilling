@@ -1,8 +1,8 @@
 using ISRORBilling.Database;
-using ISRORBilling.Models;
+using ISRORBilling.Models.Authentication;
 using Microsoft.IdentityModel.Tokens;
 
-namespace ISRORBilling.Services;
+namespace ISRORBilling.Services.Authentication;
 
 public class SimpleAuthService : IAuthService
 {

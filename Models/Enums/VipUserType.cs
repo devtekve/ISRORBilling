@@ -1,4 +1,4 @@
-namespace ISRORBilling.Models
+namespace ISRORBilling.Models.Enums
 {
     public enum VipUserType : int
     {

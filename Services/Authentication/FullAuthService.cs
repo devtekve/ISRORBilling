@@ -1,8 +1,8 @@
 using ISRORBilling.Database;
-using ISRORBilling.Models;
+using ISRORBilling.Models.Authentication;
 using Microsoft.EntityFrameworkCore;
 
-namespace ISRORBilling.Services;
+namespace ISRORBilling.Services.Authentication;
 
 /// <summary>
 /// For this auth type to work you must have the account on MU_User, you must have it as well on dbo.AUH_AgreedService, and it also must exist on TB_Users (becuse the procedure _CertifyTB_User_Integration relies on it, tho you can modify it)
