@@ -9,9 +9,15 @@ public class EmailService : IEmailService
 
     public EmailService(ILogger<EmailService> logger) => _logger = logger;
 
-    public Task<bool> SendSecondPasswordByEmail(string newCode, string strEmail)
+    public Task<bool> SendSecondPasswordByEmail(SendSecondPasswordByEmailRequest request)
     {
-        _logger.LogError($"Sending second password by email is not implemented! Failed for [{strEmail}]");
+        if (!request.Validate())
+        {
+            _logger.LogCritical("Couldn't validate if request was legitimate. Ensure the SaltKey matches the one in GatewayServer. [Error Code: {ErrorCode}]\nDetails:{Request}", (int)LoginResponseCodeEnum.Emergency, request);
+            return Task.FromResult(false);
+        }
+
+        _logger.LogError($"Sending Secundary Password by email is not implemented! Failed for [{request.email}]");
         return Task.FromResult(false);
     }
 

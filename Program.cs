@@ -68,17 +68,17 @@ app.MapGet("/cgi/EmailPassword.asp",
     async ([FromQuery] string values, [FromServices] ILogger<Program> logger, [FromServices] AccountContext accountContext,
         [FromServices] IEmailService emailService) =>
     {
-        logger.LogDebug("Received in params: {Values}", values);
-        var allValues = values.Split('|');
-        var channel = allValues[0];
-        var newCode = allValues[1];
-        var email = allValues[2];
-        var token = allValues[3];
+        if (saltKey.IsNullOrEmpty())
+            logger.LogWarning("THERE'S NO SALT KEY CONFIGURED IN APPSETTINGS; WE CAN'T VALIDATE IF REQUEST WAS TAMPERED!");
 
-        if (await emailService.SendSecondPasswordByEmail(newCode, email))
+        logger.LogDebug("Received in params: {Values}", values);
+
+        var request = new SendSecondPasswordByEmailRequest(values, saltKey);
+
+       // if (await emailService.SendSecondPasswordByEmail(request))
             return 0;
 
-        return -1;
+      //  return -1;
     });
 
 app.MapGet("/cgi/Email_Certification.asp",

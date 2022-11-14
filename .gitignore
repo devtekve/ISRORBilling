@@ -7,3 +7,8 @@ bin
 /.gitignore
 /.gitignore
 /.gitignore
+/.vs/ISRORBilling
+/.vs/ProjectEvaluation
+*.json
+/appsettings.json
+/.gitignore
