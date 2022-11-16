@@ -4,6 +4,31 @@ As this is an educational project, the idea is to use it to learn new ways of wo
 
 This tool handles the login from users into ISROR files; It has been designed extensible, so you can create your own login flow if you want to.
 
+## New Update 16/11/2022 (Nemo07)
+- Added missing info to SQL Script .
+1-Excute this [Update_ItemLock.sql Script](/Database/CommunityProvided/F3rreNotificationService/Update_ItemLock.sql)
+2-Excute this **``` ALTER TABLE [SILKROAD_R_ACCOUNT].[dbo].[TB_User] ADD [ItemLockPW] VARCHAR(max); ```**
+3-Choose **Type : Ferre** from "*appsettings.json*" 👈👀
+![App Screenshot](https://i.imgur.com/Ph3nPcb.png)
+
+- Enabled TCP system , Thanks to Ferre for sure ..
+
+![App Screenshot](https://i.imgur.com/iOMPFBL.png)
+
+### Here is how to make TCP work.
+
+1-Open General Server.cfg.
+2-Go to Gateway Section to "**TcpPingServerCount**".
+3-Change "TcpPingServerCount" from 3 to 4.
+4-Add 
+```	// TcpPing01_Nation : Europe
+	TcpPing03_Nation		4			// Second (Zero Base) Bing Server Country Code
+	TcpPing03_URL			"YourServerIP"	// Second Ping Server URL
+	TcpPing03_Port			12989			// Second Ping Server Port
+```
+![App Screenshot](https://i.imgur.com/T5laM3T.png)
+
+
 ## Appsettings layout
 Appsettings is where you can configure the tool's behavior.
 
@@ -29,7 +54,7 @@ Appsettings is where you can configure the tool's behavior.
     "JoymaxPortalDB": "Data Source=.\\;TrustServerCertificate=True;Initial Catalog=GB_JoymaxPortal;User ID=sa;Password=1;"
   },
   "NotificationService": {
-    "Type": "Email" // 👈 Only supported email for now. In the future others can add more types, same as auth type.
+    "Type": "Email" // 👈 Only supported email for now. In the future others can add more types, same as auth type. //Email (SMTP) //Ferre (bypassed the code in TB_User table)
   },
   "EmailService": {
     "From": "yourEmail",
