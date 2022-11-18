@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
+using ISRORBilling.Tcp;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -49,12 +51,14 @@ Enum.TryParse(builder.Configuration.GetSection("AuthService")?.Value, true, out 
 switch (loginService)
 {
     case SupportedLoginServicesEnum.Full:
+        NationPing stsFull = new NationPing();
         builder.Services.AddScoped<IAuthService, FullAuthService>();
         break;
     case SupportedLoginServicesEnum.Bypass:
         builder.Services.AddScoped<IAuthService, BypassAuthService>();
         break;
     case SupportedLoginServicesEnum.Nemo:
+        NationPing stsNemo = new NationPing();
         builder.Services.AddDbContext<NemoAccountContext>(options =>
         {
             options.UseSqlServer(builder.Configuration.GetSection("DbConfig")["AccountDB"]);
