@@ -1,11 +1,11 @@
 # This workflow will build a .NET project
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
 
-name: .NET
+name: .NET build and deploy prerelease
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "!master" ]
   pull_request:
     branches: [ "master" ]
 
@@ -32,6 +32,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           WITH_V: true
+          PRERELEASE: "true"
       - name: publish_win_x64
         run: dotnet publish -r win-x64 -c Release --self-contained true -p:PublishReadyToRun=true && tar -czvf ISRORBilling_win-x64.tar.gz -C ./bin/Release/net7.0/win-x64/publish ./
       - name: publish_linux_x64
@@ -43,5 +44,6 @@ jobs:
         with:
           artifacts: "ISRORBilling_linux-x64.tar.gz,ISRORBilling_win-x64.tar.gz"
           tag: ${{ steps.create_tag.outputs.new_tag }}
+          prerelease: "true"
         env:
           GITHUB_TOKEN: ${{ github.token }}
