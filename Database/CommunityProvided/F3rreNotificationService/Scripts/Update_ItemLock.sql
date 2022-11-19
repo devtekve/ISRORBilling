@@ -1,4 +1,14 @@
-CREATE OR ALTER PROCEDURE [dbo].[Update_ItemLock] 
+USE [SILKROAD_R_ACCOUNT]
+GO
+
+/****** Object:  StoredProcedure [dbo].[Update_ItemLock]    Script Date: 23.10.2022 21:26:51 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER OFF
+GO
+
+CREATE PROCEDURE [dbo].[Update_ItemLock]	/*-- If you already have it just use "ALTER" instead of CREATE --*/
     @JID INT
 	,@Email VARCHAR(max)
 	,@LockPw VARCHAR(max)

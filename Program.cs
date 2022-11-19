@@ -3,10 +3,12 @@ using ISRORBilling.Database.CommunityProvided.Nemo07;
 using ISRORBilling.Models.Authentication;
 using ISRORBilling.Models.Notification;
 using ISRORBilling.Models.Options;
+using ISRORBilling.Models.Ping;
 using ISRORBilling.Services.Authentication;
 using ISRORBilling.Services.Authentication.CommunityProvided.Nemo07;
 using ISRORBilling.Services.Notification;
 using ISRORBilling.Services.Notification.CommunityProvided;
+using ISRORBilling.Services.Ping;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -26,6 +28,9 @@ builder.Services.AddDbContext<JoymaxPortalContext>(options =>
     options.UseSqlServer(builder.Configuration.GetSection("DbConfig")["JoymaxPortalDB"]);
     options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
 });
+
+builder.Services.Configure<NationPingServiceOptions>(builder.Configuration.GetSection("NationPingService"));
+builder.Services.AddHostedService<NationPingService>();
 
 Enum.TryParse(builder.Configuration.GetSection("NotificationService:Type")?.Value, true, out NotificationServiceType notificationServiceType);
 switch (notificationServiceType)

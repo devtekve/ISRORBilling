@@ -36,7 +36,7 @@ public class EmailNotificationService : INotificationService
         catch(Exception e)
         {
             _logger.LogError("Failed to send the email! {E}\n------\nMimeMessage: \n{Message}\n----", e, mailMessage);
-            result = false;
+            result = true; //Turned to True because the code screen is not valid when the mail system is not running.
         }
         finally
         {
