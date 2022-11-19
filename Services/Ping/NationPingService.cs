@@ -41,7 +41,6 @@ namespace ISRORBilling.Services.Ping
             while (!cancellationToken.IsCancellationRequested)
             {
                 var socket = await _tcpListener.AcceptSocketAsync(cancellationToken).ConfigureAwait(false);
-                if (_logger.IsEnabled(LogLevel.Debug))
                 _logger.LogDebug("[{clientEndPoint}]: connected.", socket.RemoteEndPoint);
 
                 _ = ProcessSocket(socket, cancellationToken);
