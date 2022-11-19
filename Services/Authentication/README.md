@@ -68,7 +68,7 @@ It's a feature that make you use **VIP system** with simple authorizer for peopl
 }
 ```
 
-You can see [more details here](/Services/CommunityProvided/Nemo07#made-by-nemo07)
+You can see [more details here](/Services/Authentication/CommunityProvided/Nemo07#made-by-nemo07)
 
 
 ## Make your own login flow
