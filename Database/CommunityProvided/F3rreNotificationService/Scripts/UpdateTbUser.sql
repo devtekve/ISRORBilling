@@ -1,0 +1,2 @@
+USE SILKROAD_R_ACCOUNT;
+ALTER TABLE [dbo].[TB_User] ADD [ItemLockPW] VARCHAR(max);
