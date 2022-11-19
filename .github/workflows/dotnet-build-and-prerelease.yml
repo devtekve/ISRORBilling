@@ -44,6 +44,7 @@ jobs:
         with:
           artifacts: "ISRORBilling_linux-x64.tar.gz,ISRORBilling_win-x64.tar.gz"
           tag: ${{ steps.create_tag.outputs.new_tag }}
-          prerelease: true
+          prerelease: "true"
+          pre_release: "true"
         env:
           GITHUB_TOKEN: ${{ github.token }}
