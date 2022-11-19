@@ -4,9 +4,9 @@
         <TargetFramework>net7.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
-        <LangVersion>10</LangVersion>
+        <LangVersion>latestmajor</LangVersion>
         <PublishTrimmed>false</PublishTrimmed>
-        <PublishSingleFile>true</PublishSingleFile>
+        <PublishSingleFile Condition="'$(Configuration)' == 'Release'">true</PublishSingleFile>
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="MailKitLite" Version="3.4.2" />
