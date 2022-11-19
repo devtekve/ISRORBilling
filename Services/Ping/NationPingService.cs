@@ -1,7 +1,10 @@
+using ISRORBilling.Models.Ping;
+
+using Microsoft.Extensions.Options;
+
+using System.Buffers;
 using System.Net;
 using System.Net.Sockets;
-using ISRORBilling.Models.Ping;
-using Microsoft.Extensions.Options;
 
 namespace ISRORBilling.Services.Ping
 {
@@ -29,45 +32,46 @@ namespace ISRORBilling.Services.Ping
             _logger.LogInformation(
                 "Ping Service listening on [{ServiceOptionsListenAddress}:{ServiceOptionsListenPort}]",
                 _options.ListenAddress, _options.ListenPort);
-            return RequestHandler(cancellationToken);
+
+            return ProcessAccept(cancellationToken);
         }
 
-        private async Task RequestHandler(CancellationToken cancellationToken)
+        private async Task ProcessAccept(CancellationToken cancellationToken)
         {
             while (!cancellationToken.IsCancellationRequested)
             {
-                var client = await _tcpListener.AcceptTcpClientAsync(cancellationToken).ConfigureAwait(false);
-                var innerCancellationToken = new CancellationTokenSource();
-                var linkedCancellationToken = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, innerCancellationToken.Token);
-                try
-                {
-                    await DoRequest(client, linkedCancellationToken.Token);
-                }
-                catch
-                {
-                    innerCancellationToken.Cancel();
-                }
+                var socket = await _tcpListener.AcceptSocketAsync(cancellationToken).ConfigureAwait(false);
+
+                if (_logger.IsEnabled(LogLevel.Debug))
+                    _logger.LogDebug("[{clientEndPoint}]: connected.", socket.RemoteEndPoint);
+
+                _ = ProcessSocket(socket, cancellationToken);
             }
         }
 
-        private async Task DoRequest(TcpClient client, CancellationToken cancellationToken)
+        private static async Task ProcessSocket(Socket socket, CancellationToken cancellationToken)
         {
-            _logger.LogDebug("[{@ClientRemoteEndPoint}]: connected", client.Client.RemoteEndPoint);
-            var stream = client.GetStream();
-            while (!cancellationToken.IsCancellationRequested && client.Connected)
+            await using var stream = new NetworkStream(socket, true);
+
+            var buffer = ArrayPool<byte>.Shared.Rent(14);
+            var memory = new Memory<byte>(buffer)[..14];
+            try
             {
-                var received = new byte[14];
-                await stream.ReadExactlyAsync(received, cancellationToken);
+                await stream.ReadExactlyAsync(memory, cancellationToken).ConfigureAwait(false);
+                if (buffer[2] != (byte)'R' || buffer[3] != (byte)'E' || buffer[4] != (byte)'Q' || buffer[5] != (byte)'\0')
+                    return;
 
-                received[2] = (byte)'A';
-                received[3] = (byte)'C';
-                received[4] = (byte)'K';
+                buffer[2] = (byte)'A';
+                buffer[3] = (byte)'C';
+                buffer[4] = (byte)'K';
+                buffer[5] = (byte)'\0';
 
-                await stream.WriteAsync(received, cancellationToken);
-                client.Close();
+                await stream.WriteAsync(memory, cancellationToken).ConfigureAwait(false);
             }
-
-            stream.Close(); //If the GW wants to keep the session alive this should be after the while loop
+            finally
+            {
+                ArrayPool<byte>.Shared.Return(buffer);
+            }
         }
     }
 }
