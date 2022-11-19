@@ -35,6 +35,7 @@ We've used GMAIL for testing and you can learn how to get your account ready fol
     "From": "yourEmail",
     "FromFriendlyName": "YourServerName??",
     "SmtpServer": "smtp.gmail.com",
+    "UseSSL": true,
     "Port": 465,
     "Username": "FOLLOW https://code-maze.com/aspnetcore-send-email/",
     "Password": "FOLLOW https://code-maze.com/aspnetcore-send-email/",

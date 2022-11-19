@@ -32,7 +32,7 @@ public class EmailNotificationService : INotificationService
         using var client = new SmtpClient();
         try
         {
-            client.Connect(_emailOptions.SmtpServer, _emailOptions.Port, true);
+            client.Connect(_emailOptions.SmtpServer, _emailOptions.Port, _emailOptions.UseSSL);
             client.AuthenticationMechanisms.Remove("XOAUTH2");
             client.Authenticate(_emailOptions.UserName, _emailOptions.Password);
             client.Send(mailMessage);

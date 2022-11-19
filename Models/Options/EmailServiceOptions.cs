@@ -5,11 +5,12 @@ namespace ISRORBilling.Models.Options;
 /// </summary>
 public class EmailOptions
 {
-    public string From { get; set; } = "unknown@unknown.com";
-    public string FromFriendlyName { get; set; } = "UnknownFriendlyName";
-    public string SmtpServer { get; set; } = "";
-    public int Port { get; set; }
-    public string UserName { get; set; } = "";
-    public string Password { get; set; } = "";
-    public bool SkipTokenValidation { get; set; }
+    public string From { get; } = "unknown@unknown.com";
+    public string FromFriendlyName { get; } = "UnknownFriendlyName";
+    public string SmtpServer { get; } = "";
+    public bool UseSSL { get; } = true;
+    public int Port { get; }
+    public string UserName { get; } = "";
+    public string Password { get; } = "";
+    public bool SkipTokenValidation { get; }
 }
