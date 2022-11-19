@@ -32,7 +32,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           WITH_V: true
-          RELEASE_BRANCHES: ["master"]
+          RELEASE_BRANCHES: "master"
       - name: publish_win_x64
         run: dotnet publish -r win-x64 -c Release --self-contained true -p:PublishReadyToRun=true && tar -czvf ISRORBilling_win-x64.tar.gz -C ./bin/Release/net7.0/win-x64/publish ./
       - name: publish_linux_x64
