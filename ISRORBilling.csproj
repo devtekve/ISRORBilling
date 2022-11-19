@@ -7,11 +7,13 @@
         <LangVersion>latestmajor</LangVersion>
         <PublishTrimmed>false</PublishTrimmed>
         <PublishSingleFile Condition="'$(Configuration)' == 'Release'">true</PublishSingleFile>
+        <RuntimeIdentifiers>win-x64;linux-x64;osx-x64;osx-arm64</RuntimeIdentifiers>
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="MailKitLite" Version="3.4.2" />
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.0" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.0" />
+        <PackageReference Include="NReco.Logging.File" Version="1.1.5" />
         <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
     </ItemGroup>
     <ItemGroup>
@@ -21,6 +23,9 @@
             <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
         </Content>
         <Content Update="appsettings.Development.json">
+            <CopyToPublishDirectory>Never</CopyToPublishDirectory>
+        </Content>
+        <Content Update="global.json">
             <CopyToPublishDirectory>Never</CopyToPublishDirectory>
         </Content>
     </ItemGroup>

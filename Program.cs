@@ -17,7 +17,10 @@ using Microsoft.IdentityModel.Tokens;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddLogging();
+builder.Services.AddLogging(loggingBuilder => {
+    var loggingSection = builder.Configuration.GetSection("Logging");
+    loggingBuilder.AddFile(loggingSection);
+});
 builder.Services.AddDbContext<AccountContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetSection("DbConfig")["AccountDB"]);
