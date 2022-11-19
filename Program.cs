@@ -1,3 +1,4 @@
+using ISRORBilling;
 using ISRORBilling.Database;
 using ISRORBilling.Database.CommunityProvided.Nemo07;
 using ISRORBilling.Models.Authentication;
@@ -119,4 +120,7 @@ app.MapGet("/cgi/Email_Certification.asp",
 
         return -1;
     });
+
+app.UseMiddleware<GenericHandlerMiddleware>(); //Useful to log incoming unknown requests
+
 app.Run();
