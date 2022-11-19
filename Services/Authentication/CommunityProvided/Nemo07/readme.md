@@ -1,4 +1,12 @@
 # Made by Nemo07
+- [Made by Nemo07](#made-by-nemo07)
+    * [VipSimple Authority](#vipsimple-authority)
+    * [Installation](#installation)
+    * [Registering a new user](#registering-a-new-user)
+- [If you need to Switch to another Authority :](#if-you-need-to-switch-to-another-authority--)
+
+<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
+
 
 ## VipSimple Authority
 

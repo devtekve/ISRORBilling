@@ -1,4 +1,11 @@
 # NationPingService (by F3rre)
+- [NationPingService (by F3rre)](#nationpingservice--by-f3rre-)
+    * [Settings](#settings)
+    * [Here is how to make TCP work.](#here-is-how-to-make-tcp-work)
+    * [Credits](#credits)
+
+<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
+
 This is a service used to show the ping of the given server from the ingame login screen.
 ![App Screenshot](https://i.imgur.com/iOMPFBL.png)
 

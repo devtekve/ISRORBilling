@@ -1,4 +1,14 @@
 # Notification Service
+- [Notification Service](#notification-service)
+    * [**Email (_Recommended - Default_)**](#--email---recommended---default----)
+        + [***Requirements***:](#---requirements----)
+        + [Steps](#steps)
+    * [**Ferre's**](#--ferre-s--)
+        + [***Requirements***:](#---requirements-----1)
+        + [Steps](#steps-1)
+
+<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
+
 The notification service is used to send notifications such as secondary password reset or item lock to the user. This can be done via multiple implementations of the service.
 
 

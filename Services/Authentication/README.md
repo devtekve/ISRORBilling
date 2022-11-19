@@ -1,4 +1,15 @@
 # Authentication Service
+- [Authentication Service](#authentication-service)
+  * [Authentication Service Types](#authentication-service-types)
+    + [Simple](#simple)
+    + [Full](#full)
+    + [Bypass](#bypass)
+    + [Nemo](#nemo)
+  * [Make your own login flow](#make-your-own-login-flow)
+    + [Example of very simple auth service that doesn't do DB](#example-of-very-simple-auth-service-that-doesn-t-do-db)
+
+<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
+
 This is the service used to authenticate a given user that's trying to login on the game. It's called by the gatewayserver via HTTP requests.
 
 ## Authentication Service Types
