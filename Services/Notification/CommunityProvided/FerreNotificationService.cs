@@ -24,9 +24,23 @@ public class FerreNotificationService : INotificationService
             .SqlQuery<int?>($"EXEC Update_ItemLock @jid = {JID}, @email = {Email}, @lockPw = {LockPW}")
             .AsEnumerable().FirstOrDefault() ?? -1;
 
+    private int UpdatesecondaryPw(string JID, string Email, string SecPassWord) =>
+    _accountContext.Database
+        .SqlQuery<int?>($"EXEC Update_SecPassWord @jid = {JID}, @email = {Email}, @SecPassWord = {SecPassWord}")
+        .AsEnumerable().FirstOrDefault() ?? -1;
+
     public Task<bool> SendSecondPassword(SendCodeRequest request)
     {
-        _logger.LogWarning("Sending second password is not implemented! Failed for [{RequestEmail}]", request.email);
+        if (!request.Validate())
+        {
+            _logger.LogCritical("Couldn't validate if request was legitimate. Ensure the SaltKey matches the one in GatewayServer. [Error Code: {ErrorCode}]\nDetails:{Request}", (int)LoginResponseCodeEnum.Emergency, request);
+            return Task.FromResult(false);
+        }
+        
+        if (UpdatesecondaryPw(request.jid.ToString(), request.email, request.code) >= 0)
+            return Task.FromResult(true);
+
+        _logger.LogError("Sending second password by email has Failed for [{StrEmail}]", request.email);
         return Task.FromResult(false);
     }
 

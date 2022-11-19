@@ -75,10 +75,15 @@ Works by receiving the same request than email method from the gatewayserver, bu
 ### Steps
 1-Excute this [Update_ItemLock.sql Script](/Database/CommunityProvided/F3rreNotificationService/Scripts/Update_ItemLock.sql)
 
-2-Excute this [Update_TbUser.sql Script](/Database/CommunityProvided/F3rreNotificationService/Scripts/Update_TbUser.sql)
+2-Excute this [Update_ItemLock.sql Script](/Database/CommunityProvided/F3rreNotificationService/Scripts/Update_SecPassWord.sql)
 
-3-Choose **Type : Ferre** from "*appsettings.json*" 👈👀
+3-Excute this [Update_TbUser.sql Script](/Database/CommunityProvided/F3rreNotificationService/Scripts/UpdateTbUser.sql)
+
+4-Choose **Type : Ferre** from "*appsettings.json*" 👈👀
 
 ![App Screenshot](https://i.imgur.com/Ph3nPcb.png)
 
 ![App Screenshot](https://i.imgur.com/TZZ3WKM.png)
+
+![App Screenshot](https://i.imgur.com/aQrD86u.png)
+
