@@ -420,4 +420,6 @@ $RECYCLE.BIN/
 
 # End of https://www.toptal.com/developers/gitignore/api/rider,dotnetcore,aspnetcore,macos,windows
 # Ignoring customized settings to avoid commiting sensitive information by accident!
+**/appsettings.*.json
 appsettings.*.json
+appsettings.testne.json
