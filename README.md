@@ -15,7 +15,7 @@ As this is an educational project, the idea is to use it to learn new ways of wo
 This tool handles the login from users into ISROR files; It has been designed extensible, so you can create your own login flow if you want to.
 
 ## Appsettings layout
-Appsettings is where you can configure the tool's behavior.
+Appsettings is where you can configure the tool's behavior, you can override appsettings values depending on the environment you are running (`Development`, `Staging`, `Production`, etc...)
 
 ```json
 {
@@ -58,6 +58,16 @@ Appsettings is where you can configure the tool's behavior.
   "AllowedHosts": "*" // 👈 learn more: https://learn.microsoft.com/en-us/aspnet/core/fundamentals/servers/kestrel/host-filtering?view=aspnetcore-6.0
 }
 ```
+
+You can see more details on [Application and Host Configuration](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?source=recommendations&view=aspnetcore-7.0#application-and-host-configuration) on Microsoft's documentation.
+
+But in a nutshell, 
+1. you can create `appsettings.myserver.json` and override some configs there.
+2. On your environment variables you set `ASPNETCORE_ENVIRONMENT=myserver` 
+
+The end result will be that appsettings.json will be merged internally with `appsettings.myserver.json`. 
+
+Useful for setting certain credentials that you don't want committed to git by accident.
 
 ## About services
 We try to follow "micro-service" architechture approach, this is done to allow multiple different implementations of a given service, so that the community can easily customize the behavior of their application.
