@@ -21,6 +21,11 @@ public class EmailNotificationService : INotificationService
         _emailOptions = emailOptions.Value;
     }
     
+    /// <summary>
+    /// Sends the mail to the user
+    /// </summary>
+    /// <param name="mailMessage"></param>
+    /// <returns>True if the sending worked; False if the sending failed.</returns>
     private bool SendEmail(MimeMessage mailMessage)
     {
         bool result;
@@ -36,7 +41,7 @@ public class EmailNotificationService : INotificationService
         catch(Exception e)
         {
             _logger.LogError("Failed to send the email! {E}\n------\nMimeMessage: \n{Message}\n----", e, mailMessage);
-            result = true; //Turned to True because the code screen is not valid when the mail system is not running.
+            result = false;
         }
         finally
         {
