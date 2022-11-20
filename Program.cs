@@ -78,9 +78,10 @@ switch (loginService)
         break;
 }
 
+var serviceCompany = int.Parse(builder.Configuration.GetSection("ServiceCompany").Value ?? "1");
+var requestTimeout = int.Parse(builder.Configuration.GetSection("RequestTimeout").Value ?? "60");
 var saltKey = builder.Configuration.GetSection("SaltKey").Value ?? string.Empty;
 var app = builder.Build();
-
 
 app.MapGet("/Property/Silkroad-r/checkuser.aspx",
     ([FromQuery] string values, [FromServices] ILogger<Program> logger, [FromServices] IAuthService authService) =>
@@ -90,7 +91,7 @@ app.MapGet("/Property/Silkroad-r/checkuser.aspx",
         
         logger.LogDebug("Received in params: {Values}", values);
         
-        var request = new CheckUserRequest(values, saltKey);
+        var request = new CheckUserRequest(values, saltKey, serviceCompany, requestTimeout);
         return authService.Login(request).ToString();
     });
 
