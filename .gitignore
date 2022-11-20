@@ -422,3 +422,4 @@ $RECYCLE.BIN/
 # Ignoring customized settings to avoid commiting sensitive information by accident!
 appsettings.*.json
 .fleet/**
+/Properties/launchSettings.json
