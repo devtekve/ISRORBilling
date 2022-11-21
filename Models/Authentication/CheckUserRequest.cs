@@ -10,6 +10,9 @@ public class CheckUserRequest : GatewayRequest
     public string HashedUserPassword { get; }
     public string UserIp { get; }
     public int UnixTimeStamp { get; }
+    public int ServiceCompany { get; }
+    public int RequestTimeoutSeconds { get; }
+
     protected override string CalculatedToken
     {
         get
@@ -20,7 +23,7 @@ public class CheckUserRequest : GatewayRequest
         }
     }
 
-    public CheckUserRequest(string values, string? saltKey = null)
+    public CheckUserRequest(string values, string? saltKey = null, int serviceCompany = 11, int requestTimeout = 60)
     {
         SaltKey = saltKey;
         var allValues = values.Split('|');
@@ -30,5 +33,7 @@ public class CheckUserRequest : GatewayRequest
         UserIp = allValues.ElementAtOrDefault(3) ?? "0";
         UnixTimeStamp = int.Parse(allValues.ElementAtOrDefault(4) ?? "0");
         UserProvidedValidationToken = allValues.ElementAtOrDefault(5);
+        ServiceCompany = serviceCompany;
+        RequestTimeoutSeconds = UnixTimeStamp + requestTimeout;
     }
 }

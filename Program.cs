@@ -78,19 +78,17 @@ switch (loginService)
         break;
 }
 
+var serviceCompany = int.Parse(builder.Configuration.GetSection("ServiceCompany").Value ?? "1");
+var requestTimeoutSeconds = int.Parse(builder.Configuration.GetSection("RequestTimeoutSeconds").Value ?? "3600");
 var saltKey = builder.Configuration.GetSection("SaltKey").Value ?? string.Empty;
 var app = builder.Build();
-
 
 app.MapGet("/Property/Silkroad-r/checkuser.aspx",
     ([FromQuery] string values, [FromServices] ILogger<Program> logger, [FromServices] IAuthService authService) =>
     {
-        if(saltKey.IsNullOrEmpty())
-            logger.LogWarning("THERE'S NO SALT KEY CONFIGURED IN APPSETTINGS; WE CAN'T VALIDATE IF REQUEST WAS TAMPERED!");
-        
         logger.LogDebug("Received in params: {Values}", values);
+        var request = new CheckUserRequest(values, saltKey, serviceCompany, requestTimeoutSeconds);
         
-        var request = new CheckUserRequest(values, saltKey);
         return authService.Login(request).ToString();
     });
 
@@ -111,11 +109,7 @@ app.MapGet("/cgi/Email_Certification.asp",
     async ([FromQuery] string values, [FromServices] ILogger<Program> logger, [FromServices] AccountContext accountContext,
         [FromServices] INotificationService notificationService) =>
     {
-        if (saltKey.IsNullOrEmpty())
-            logger.LogWarning("THERE'S NO SALT KEY CONFIGURED IN APPSETTINGS; WE CAN'T VALIDATE IF REQUEST WAS TAMPERED!");
-
         logger.LogDebug("Received in params: {Values}", values);
-
         var request = new SendCodeRequest(values, saltKey);
 
         if (await notificationService.SendItemLockCode(request))
