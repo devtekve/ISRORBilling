@@ -22,9 +22,9 @@ public class FullAuthService : IAuthService
 
 	public AUserLoginResponse Login(CheckUserRequest request)
 	{
-        if (request.RequestTimeout < DateTimeOffset.Now.ToUnixTimeSeconds())
+        if (request.RequestTimeoutSeconds < DateTimeOffset.Now.ToUnixTimeSeconds())
         {
-            _logger.LogCritical("Request Login URL is expired [Error Code: {0}]\nDetails: Request UnixTimeStamp({1}) < Now UnixTimeStamp({2})", (int)LoginResponseCodeEnum.ExpiredRequestUrl, request.RequestTimeout, DateTimeOffset.Now.ToUnixTimeSeconds());
+            _logger.LogCritical("Request Login URL is expired [Error Code: {0}]\nDetails: Request UnixTimeStamp({1}) < Now UnixTimeStamp({2})", (int)LoginResponseCodeEnum.ExpiredRequestUrl, request.RequestTimeoutSeconds, DateTimeOffset.Now.ToUnixTimeSeconds());
             return new AUserLoginResponse { ReturnValue = LoginResponseCodeEnum.ExpiredRequestUrl };
         }
 
