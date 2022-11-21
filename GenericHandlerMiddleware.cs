@@ -7,7 +7,7 @@ public class GenericHandlerMiddleware
 {
     private readonly RequestDelegate _next;
     private readonly ILogger<GenericHandlerMiddleware> _logger;
-    private readonly string? _PortalCGIAgentHeader;
+    private readonly string? _portalCgiAgentHeader;
     private readonly string? _saltKey;
 
     public GenericHandlerMiddleware(RequestDelegate next, ILogger<GenericHandlerMiddleware> logger,
@@ -15,9 +15,8 @@ public class GenericHandlerMiddleware
     {
         _next = next;
         _logger = logger;
-        _PortalCGIAgentHeader = configuration.GetSection("PortalCGIAgentHeader").Value;
+        _portalCgiAgentHeader = configuration.GetSection("PortalCGIAgentHeader").Value;
         _saltKey = configuration.GetSection("SaltKey").Value;
-
     }
 
     public async Task Invoke(HttpContext context)
@@ -26,17 +25,20 @@ public class GenericHandlerMiddleware
         var request = context.Request;
 
         var userAgentHeader = context.Request.Headers.UserAgent;
-        if(_saltKey.IsNullOrEmpty())
-            _logger.LogWarning("THERE'S NO SALT KEY CONFIGURED IN APPSETTINGS; WE CAN'T VALIDATE IF REQUEST WAS TAMPERED!");
-        
-        if (_PortalCGIAgentHeader.IsNullOrEmpty())
+        if (_saltKey.IsNullOrEmpty())
+            _logger.LogWarning(
+                "THERE'S NO SALT KEY CONFIGURED IN APPSETTINGS; WE CAN'T VALIDATE IF REQUEST WAS TAMPERED!");
+
+        if (_portalCgiAgentHeader.IsNullOrEmpty())
             _logger.LogWarning(
                 "THERE'S NO PORTAL AGENT CONFIGURED IN APPSETTINGS; ANY BROWSER CAN BROWSE YOUR BILLING!");
 
-        if (!_PortalCGIAgentHeader.IsNullOrEmpty() && userAgentHeader.Any(userAgent => userAgent == _PortalCGIAgentHeader))
+        if (!_portalCgiAgentHeader.IsNullOrEmpty() &&
+            userAgentHeader.All(userAgent => userAgent != _portalCgiAgentHeader))
         {
             _logger.LogCritical(
-                "PORTAL AGENT DOES NOT MATCH; SOMEONE TRYING TO BROWSE YOUR BILLING URL FROM A NORMAL BROWSER");
+                "PORTAL AGENT DOES NOT MATCH; SOMEONE TRYING TO BROWSE YOUR BILLING URL FROM A NORMAL BROWSER\nUserAgent: [{UserAgent}] \nMethod: [{RequestMethod}] \nRequest: [{RequestPath}{RequestQueryString}]",
+                userAgentHeader, request.Method, request.Path, request.QueryString);
             await response.WriteAsync(new AUserLoginResponse
                 { ReturnValue = LoginResponseCodeEnum.BrowserAgentNotMatch }.ToString());
         }
