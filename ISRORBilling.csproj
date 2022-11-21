@@ -9,6 +9,10 @@
         <PublishSingleFile Condition="'$(Configuration)' == 'Release'">true</PublishSingleFile>
         <RuntimeIdentifiers>win-x64;linux-x64;osx-x64;osx-arm64</RuntimeIdentifiers>
     </PropertyGroup>
+
+    <ItemGroup>
+      <None Remove=".gitignore" />
+    </ItemGroup>
     <ItemGroup>
         <PackageReference Include="MailKitLite" Version="3.4.2" />
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.0" />
@@ -18,7 +22,7 @@
     </ItemGroup>
     <ItemGroup>
         <Content Update="appsettings.json">
-            <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
             <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
             <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
         </Content>
