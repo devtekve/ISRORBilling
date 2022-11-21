@@ -78,26 +78,54 @@ switch (loginService)
         break;
 }
 
+var serviceCompany = int.Parse(builder.Configuration.GetSection("ServiceCompany").Value ?? "1");
+var requestTimeout = int.Parse(builder.Configuration.GetSection("RequestTimeout").Value ?? "3600");
+var portalCGIAgent = builder.Configuration.GetSection("PortalCGIAgent").Value ?? string.Empty;
 var saltKey = builder.Configuration.GetSection("SaltKey").Value ?? string.Empty;
 var app = builder.Build();
 
-
 app.MapGet("/Property/Silkroad-r/checkuser.aspx",
-    ([FromQuery] string values, [FromServices] ILogger<Program> logger, [FromServices] IAuthService authService) =>
+    ([FromQuery] string values, [FromServices] ILogger<Program> logger, [FromServices] IAuthService authService, [FromHeader(Name = "user-agent")] string useragent) =>
     {
+        if (portalCGIAgent.IsNullOrEmpty())
+        {
+            logger.LogWarning("THERE'S NO PORTAL AGENT CONFIGURED IN APPSETTINGS; ANY BROWSER CAN BROWSE YOUR BILLING!");
+        }
+        else
+        {
+            if (useragent != portalCGIAgent)
+            {
+                logger.LogCritical("PORTAL AGENT DOES NOT MATCH; SOMEONE TRYING TO BROWSE YOUR BILLING URL FROM A NORMAL BROWSER");
+                return new AUserLoginResponse { ReturnValue = LoginResponseCodeEnum.BrowserAgentNotMatch }.ToString();
+            }
+        }
+        
         if(saltKey.IsNullOrEmpty())
             logger.LogWarning("THERE'S NO SALT KEY CONFIGURED IN APPSETTINGS; WE CAN'T VALIDATE IF REQUEST WAS TAMPERED!");
         
         logger.LogDebug("Received in params: {Values}", values);
         
-        var request = new CheckUserRequest(values, saltKey);
+        var request = new CheckUserRequest(values, saltKey, serviceCompany, requestTimeout);
         return authService.Login(request).ToString();
     });
 
 app.MapGet("/cgi/EmailPassword.asp",
     async ([FromQuery] string values, [FromServices] ILogger<Program> logger, [FromServices] AccountContext accountContext,
-        [FromServices] INotificationService notificationService) =>
+        [FromServices] INotificationService notificationService, [FromHeader(Name = "user-agent")] string useragent) =>
     {
+        if (portalCGIAgent.IsNullOrEmpty())
+        {
+            logger.LogWarning("THERE'S NO PORTAL AGENT CONFIGURED IN APPSETTINGS; ANY BROWSER CAN BROWSE YOUR BILLING!");
+        }
+        else
+        {
+            if (useragent != portalCGIAgent)
+            {
+                logger.LogCritical("PORTAL AGENT DOES NOT MATCH; SOMEONE TRYING TO BROWSE YOUR BILLING URL FROM A NORMAL BROWSER");
+                return -1;
+            }
+        }
+
         logger.LogDebug("Received in params: {Values}", values);
         var request = new SendCodeRequest(values, saltKey);
 
@@ -109,8 +137,21 @@ app.MapGet("/cgi/EmailPassword.asp",
 
 app.MapGet("/cgi/Email_Certification.asp",
     async ([FromQuery] string values, [FromServices] ILogger<Program> logger, [FromServices] AccountContext accountContext,
-        [FromServices] INotificationService notificationService) =>
+        [FromServices] INotificationService notificationService, [FromHeader(Name = "user-agent")] string useragent) =>
     {
+        if (portalCGIAgent.IsNullOrEmpty())
+        {
+            logger.LogWarning("THERE'S NO PORTAL AGENT CONFIGURED IN APPSETTINGS; ANY BROWSER CAN BROWSE YOUR BILLING!");
+        }
+        else
+        {
+            if (useragent != portalCGIAgent)
+            {
+                logger.LogCritical("PORTAL AGENT DOES NOT MATCH; SOMEONE TRYING TO BROWSE YOUR BILLING URL FROM A NORMAL BROWSER");
+                return -1;
+            }
+        }
+
         if (saltKey.IsNullOrEmpty())
             logger.LogWarning("THERE'S NO SALT KEY CONFIGURED IN APPSETTINGS; WE CAN'T VALIDATE IF REQUEST WAS TAMPERED!");
 

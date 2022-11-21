@@ -1,3 +1,4 @@
+using System.Net;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -10,6 +11,9 @@ public class CheckUserRequest : GatewayRequest
     public string HashedUserPassword { get; }
     public string UserIp { get; }
     public int UnixTimeStamp { get; }
+    public int ServiceCompany { get; }
+    public int RequestTimeout { get; }
+
     protected override string CalculatedToken
     {
         get
@@ -20,15 +24,19 @@ public class CheckUserRequest : GatewayRequest
         }
     }
 
-    public CheckUserRequest(string values, string? saltKey = null)
+    public CheckUserRequest(string values, string? saltKey = null, int serviceCompany = 0, int requestTimeout = 0)
     {
         SaltKey = saltKey;
         var allValues = values.Split('|');
         ChannelId = short.Parse(allValues[0]);
         UserId = allValues[1];
         HashedUserPassword = allValues[2];
-        UserIp = allValues.ElementAtOrDefault(3) ?? "0";
+        UserIp =allValues.ElementAtOrDefault(3) ?? "0";
         UnixTimeStamp = int.Parse(allValues.ElementAtOrDefault(4) ?? "0");
         UserProvidedValidationToken = allValues.ElementAtOrDefault(5);
+        ServiceCompany = serviceCompany;
+        RequestTimeout = UnixTimeStamp+requestTimeout;
     }
+
+    
 }
