@@ -15,5 +15,8 @@ public enum LoginResponseCodeEnum : int
     BlockedIp = -131080,
     NotSubscribedToService = -131081, //Check if JID is in dbo.AUH_AgreedService
     BlockedCountry = -131084,
-    EmailAuthNotUsed = -262145
+    EmailAuthNotUsed = -262145,
+    //Not from JMX
+    ExpiredRequestUrl = -65561,
+    BrowserAgentNotMatch = -65562
 }
