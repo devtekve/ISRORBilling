@@ -9,8 +9,11 @@ public class EmailOptions
     public string FromFriendlyName { get; set; } = "UnknownFriendlyName";
     public string SmtpServer { get; set; } = "";
     public bool UseSSL { get; set; } = true;
+    public bool UseCCR { get; set; } = true;
     public int Port { get; set; }
     public string UserName { get; set; } = "";
     public string Password { get; set; } = "";
     public bool SkipTokenValidation { get; set; }
+    public string PasswordTemplate { get; set; } = string.Empty;
+    public string PasscodeTemplate { get; set; } = string.Empty;
 }

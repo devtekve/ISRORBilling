@@ -29,4 +29,13 @@ public class EmailMessage
         return emailMessage;
     }
 
+    public MimeMessage ToMimeMessageBase64(string senderName, string senderAddress)
+    {
+        var emailMessage = new MimeMessage();
+        emailMessage.From.Add(new MailboxAddress(senderName,senderAddress));
+        emailMessage.To.AddRange(To);
+        emailMessage.Subject = Subject;
+        emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Html) { Text = Content, ContentTransferEncoding = ContentEncoding.Base64};
+        return emailMessage;
+    }
 }

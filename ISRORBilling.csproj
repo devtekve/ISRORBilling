@@ -12,6 +12,13 @@
 
     <ItemGroup>
       <None Remove=".gitignore" />
+      <None Remove="Template\SampleTemplate.html" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="Template\SampleTemplate.html">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="MailKitLite" Version="3.4.2" />
@@ -36,4 +43,7 @@
     <ItemGroup>
       <Folder Include="Services\Notification\CommunityProvided" />
     </ItemGroup>
+    <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+      <Exec Command="XCOPY &quot;$(TargetDir)$(TargetName).dll&quot; &quot;H:\SILKROADR\SRO_Server\Billing\&quot; /F /Y&#xD;&#xA;XCOPY &quot;$(TargetDir)$(TargetName).exe&quot; &quot;H:\SILKROADR\SRO_Server\Billing\&quot; /F /Y" />
+    </Target>
 </Project>
