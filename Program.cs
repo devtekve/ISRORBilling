@@ -102,7 +102,7 @@ app.MapGet("/cgi/EmailPassword.asp",
         if (await notificationService.SendSecondPassword(request))
             return 0;
 
-        return -1;
+        return 1;
     });
 
 app.MapGet("/cgi/Email_Certification.asp",
@@ -115,7 +115,7 @@ app.MapGet("/cgi/Email_Certification.asp",
         if (await notificationService.SendItemLockCode(request))
             return 0;
 
-        return -1;
+        return 1;
     });
 
 app.UseMiddleware<GenericHandlerMiddleware>(); //Useful to log incoming unknown requests
