@@ -56,7 +56,8 @@ public class FullAuthService : IAuthService
          , @NickName varchar(30)
          , @VipLevel int
          , @VipExpireTime datetime
-         , @VipUserType int;
+         , @VipUserType int
+         , @CountryCode varchar(2);
 
          EXEC @return_value = [dbo].[A_UserLogin] @UserID = {userId},
                  @UserPwd = {userPw},
@@ -74,7 +75,9 @@ public class FullAuthService : IAuthService
                  @VipExpireTime = @VipExpireTime OUTPUT,
                  @VipUserType = @VipUserType OUTPUT;
 
-		SELECT	'ReturnValue' = @return_value,
+         EXEC @CountryCode = [dbo].[F_GetCountryCodeByIPBinary] {IP2Bin(userIp)};
+
+         SELECT	'ReturnValue' = @return_value,
 				@JID as N'JID',
 				@CurrentDate as N'CurrentDate',
 				@ARCode as N'ARCode',
@@ -84,7 +87,8 @@ public class FullAuthService : IAuthService
 				@NickName as N'NickName',
 				@VipLevel as N'VipLevel',
 				@VipExpireTime as N'VipExpireTime',
-				@VipUserType as N'VipUserType';");
+				@VipUserType as N'VipUserType',
+				@CountryCode as N'CountryCode';");
 	    
 	    return loginResponse.AsEnumerable().FirstOrDefault() ?? new AUserLoginResponse()
 		    { ReturnValue = LoginResponseCodeEnum.NotFoundUid };
