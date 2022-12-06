@@ -44,7 +44,4 @@
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
     </ItemGroup>
-    <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-      <Exec Command="XCOPY &quot;$(TargetDir)$(TargetName).dll&quot; &quot;H:\SILKROADR\SRO_Server\Billing\&quot; /F /Y&#xD;&#xA;XCOPY &quot;$(TargetDir)$(TargetName).exe&quot; &quot;H:\SILKROADR\SRO_Server\Billing\&quot; /F /Y" />
-    </Target>
 </Project>
